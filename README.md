@@ -10,7 +10,7 @@ Trivia is a web application for hosting trivia games where the player must answe
 4) Search for questions based on a text query string.
 5) Play the quiz game, randomizing either all questions or within a specific category. 
 
-This project is from the Udacity Full Staack Nanodegree program.
+This project is from the [`Udacity Full Stack Web Developer Nanodegree`](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044) program. program.
 
 ## Documentation
 
