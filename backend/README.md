@@ -139,11 +139,17 @@ The API will return the following errors:
 #### GET /questions?page=1
 - Fetches a list of paginated questions, number value indicating total number of questions found, dictionary of categories, and number value indicating Category id of the current category
 - Request Arguments: Optional URL query containing the following
+    
     '''page''': A value indicating page number for pagination
+    
 - Returns: Response body containing the following keys
+
     '''questions''': A list containing JSON objects of questions found by the request, restricted to the current page number and limit
+    
     '''total_questions''': A value indicating total number of questions found by the current request
+    
     '''categories''': A dictionary containing key:value pairs of Category id:Category Type
+    
     '''current_category''': A value indicating current Category id. For this url it is always None
 
 ```
@@ -171,8 +177,11 @@ The API will return the following errors:
 #### DELETE /questions/<int:question_id>
 - Deletes a question with an id matching the url argument
 - Request Arguments: 
+
     '''question_id''': A number value indicating the Question id of the entry to be deleted
+    
 - Returns: Response body containing the following key
+
     '''deleted''': A number value indicating the Question id of the entry to be deleted
 
 ```
@@ -184,9 +193,13 @@ The API will return the following errors:
 #### POST /questions
 - Creates and adds a question to the database
 - Request Arguments: 
+
     '''question''': A string value containing the entry question
+    
     '''answer''': A string value containing the answer to the entry question
+    
     '''difficulty''': A number value indicating the difficulty of the entry question
+    
     '''category''': A number value indicating the Category id of the entry question
 
 ```
@@ -201,6 +214,7 @@ The API will return the following errors:
 ```
 
 - Returns: Response body containing the following key
+
     '''message''': A string indicating the request was handled successfully and the entry was added to the database
 
 ```
@@ -211,7 +225,8 @@ The API will return the following errors:
 
 #### POST /questions/search
 - Fetches a list of paginated questions with a matching string for the search term, number value indicating total number of questions found, and number value indicating Category id of the current category
-- Request Arguments: 
+- Request Arguments:
+
     '''searchTerm''': A string value to be matched with Question entries
 
 ```
@@ -221,8 +236,11 @@ The API will return the following errors:
 ```
 
 - Returns: Response body containing the following keys
+
     '''questions''': A list containing JSON objects of questions found by the request, restricted to the current page number and limit
+    
     '''total_questions''': A value indicating total number of questions found by the current request
+    
     '''current_category''': A value indicating current Category id. For this url it is always None
 
 ```
@@ -242,6 +260,7 @@ The API will return the following errors:
 #### GET /categories/<int:category_id>/questions
 - Fetches a list of paginated questions for the requested category, number value indicating total number of questions found, and number value indicating Category id of the current category
 - Request Arguments: 
+
     '''category_id''': A number value indicating the Category id to match
 
 ```
@@ -251,8 +270,11 @@ The API will return the following errors:
 ```
 
 - Returns: Response body containing the following keys
+
     '''questions''': A list containing JSON objects of questions found by the request, restricted to the current page number and limit
+    
     '''total_questions''': A value indicating total number of questions found by the current request
+    
     '''current_category''': A value indicating current Category id
 
 ```
@@ -272,7 +294,9 @@ The API will return the following errors:
 #### POST /quizzes
 - Fetches a random question from the database for the current category, such that the question entry had not been retrieved before
 - Request Arguments: 
+
     '''previous_questions''': A list of Question id indicating which questions had been previously retrieved
+    
     '''quiz_category''': A value indicating the Category id of the quiz
 
 ```
@@ -283,6 +307,7 @@ The API will return the following errors:
 ```
 
 - Returns: Response body containing the following key
+
     '''question''': A dictionary containing all values of the selected question entry
 
 ```
