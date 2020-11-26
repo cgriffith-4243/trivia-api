@@ -29,7 +29,7 @@ def create_app(test_config=None):
       categories = {}
       for category in page_categories:
         categories[category.id] = category.type
-
+      # see documentation for response object details
       return jsonify({
         'success': True,
         'categories': categories
@@ -41,10 +41,11 @@ def create_app(test_config=None):
   def questions():
     current_page = request.args.get('page', default=1, type=int)
     questions_per_page = PAGINATION_LIMIT
-
+    # return only the results that appear on the current page being viewed (page 1)
     page_questions = Question.query.order_by(Question.category).paginate(current_page, questions_per_page, True)
     all_categories = Category.query.all()
     if all_categories and page_questions:
+      # see documentation for response object details
       questions = []
       for question in page_questions.items:
         questions.append(question.format())
@@ -70,7 +71,7 @@ def create_app(test_config=None):
     question = Question.query.filter(Question.id == question_id).one_or_none()
     if question is None:
       abort(404)
-
+    # after verifying question of question_id exists, attempt deletion
     error = False
     try:
       db.session.delete(question)
@@ -81,6 +82,7 @@ def create_app(test_config=None):
     finally:
       db.session.close()
       if not error:
+        # see documentation for response object details
         return jsonify({
           'success': True,
           'deleted': question_id
@@ -97,10 +99,10 @@ def create_app(test_config=None):
     answer = form.get('answer', None)
     difficulty = form.get('difficulty', None)
     category = form.get('category', None)
-
+    # only continue after verifying payload contains all essential data
     if not (question and answer and difficulty and category):
       abort(422)
-    
+    # attempt insertion of new entry into db
     try:
       new_question = Question(
         question = question,
@@ -116,6 +118,7 @@ def create_app(test_config=None):
     finally:
       db.session.close()
       if not error:
+        # see documentation for response object details
         return jsonify({
           'success': True,
           'message': 'Question was successfully created'
@@ -130,6 +133,7 @@ def create_app(test_config=None):
     questions_per_page = PAGINATION_LIMIT
 
     if search_term:
+      # return only the results that appear on the current page being viewed
       page_questions = Question.query.filter(Question.question.ilike(f'%{search_term}%')).paginate(current_page, questions_per_page, True)
 
       questions = []
@@ -137,7 +141,7 @@ def create_app(test_config=None):
         questions.append(question.format())
 
       total_questions = page_questions.total
-      
+      # see documentation for response object details
       return jsonify({
         'success': True,
         'questions': questions,
@@ -151,7 +155,7 @@ def create_app(test_config=None):
   def show_category_questions(category_id):
     current_page = request.args.get('page', default=1, type=int)
     questions_per_page = PAGINATION_LIMIT
-
+    # return only the results that appear on the current page being viewed
     page_questions = Question.query.filter(Question.category == category_id).paginate(current_page, questions_per_page, True)
     current_category = Category.query.get(category_id).id
     if current_category and page_questions:
@@ -160,7 +164,7 @@ def create_app(test_config=None):
         questions.append(question.format())
 
       total_questions = page_questions.total
-      
+      # see documentation for response object details
       return jsonify({
         'success': True,
         'questions': questions,
@@ -175,20 +179,21 @@ def create_app(test_config=None):
     form = request.get_json()
     previous_questions = form.get('previous_questions', None)
     quiz_category = form.get('quiz_category', None)
-
+    # only continue after verifying payload contains all essential data
     if quiz_category is None or previous_questions is None or type(previous_questions) != list or quiz_category.get('id', None) is None:
       abort(400)
-    
+    # only continue after verifying data is valid
     if quiz_category['id'] != 0 and Category.query.filter(Category.id == quiz_category['id']).scalar() is None:
        abort(404)
-
+    # find questions from category if specified. Query all categories specified by 0
     questions = Question.query
     if quiz_category['id'] != 0:
       questions = questions.filter(Question.category == quiz_category['id'])
-
+    # randomize results and select one entry
     quiz_question = questions.order_by(func.random()).filter(Question.id.notin_(previous_questions)).first()
     
     if quiz_question:
+      # see documentation for response object details
       return jsonify({
         'success': True,
         'question': quiz_question.format()
@@ -223,7 +228,7 @@ def create_app(test_config=None):
     }), 422
 
   @app.errorhandler(500)
-  def unprocessable_entity(error):
+  def internal_error(error):
     return jsonify({
       'success': False,
       'error': 500,
