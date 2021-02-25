@@ -23,4 +23,4 @@ README documentation for the Frontend and Backend of this application:
 
 Cameron Griffith authored the [`API`](./backend/flaskr/__init__.py), [`test suite`](./backend/test_flaskr.py), and the application README
 
-This project was created by [`Udacity`](https://www.udacity.com) as part of the [`Full Stack Web Developer Nanodegree`](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044) program.
+The base code for this project was created by [`Udacity`](https://www.udacity.com) as part of the [`Full Stack Web Developer Nanodegree`](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044) program.
